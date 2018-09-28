@@ -3,6 +3,10 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
+Properties properties = new Properties()
+File propertiesFile = rootProject.file("secret.properties")
+properties.load(new FileInputStream(propertiesFile))
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -17,6 +21,13 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    buildTypes.each {
+        properties.each { line ->
+            def key = line.getKey()
+            def value = line.getValue()
+            it.buildConfigField "String", key, value
         }
     }
 }
