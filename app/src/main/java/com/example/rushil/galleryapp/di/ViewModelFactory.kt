@@ -23,7 +23,7 @@ class ViewModelFactory @Inject constructor(private val viewModels: MutableMap<Cl
 @MapKey
 internal annotation class ViewModelKey(val value: KClass<out ViewModel>)
 
-inline fun <reified T: ViewModel> FragmentActivity.getViewModel(viewModelFactory: ViewModelProvider.Factory): T {
+inline fun <reified T : ViewModel> FragmentActivity.getViewModel(viewModelFactory: ViewModelProvider.Factory): T {
     return ViewModelProviders.of(this, viewModelFactory)[T::class.java]
 }
 

@@ -7,14 +7,14 @@ import javax.inject.Inject
 class GalleryViewModel @Inject constructor(private val galleryService: GalleryService) : ViewModel() {
     private val jobs = mutableListOf<Job>()
 
-    suspend fun getImages(): List<Image> {
+    suspend fun getImages(page: Int = 1, perPage: Int = 100): PhotosResponse {
         return galleryService
-            .getImages()
+            .getImages(page, perPage)
             .apply {
                 jobs.add(this)
                 this.invokeOnCompletion { jobs.remove(this) }
             }
-            .await().photos.photo
+            .await().photos
     }
 
     override fun onCleared() {
