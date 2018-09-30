@@ -3,8 +3,8 @@ package com.example.rushil.galleryapp.gallery
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.bumptech.glide.Glide
 import com.example.rushil.galleryapp.R
 import com.example.rushil.galleryapp.di.withViewModel
 import kotlinx.android.synthetic.main.activity_gallery.*
@@ -27,7 +27,7 @@ class GalleryActivity : AppCompatActivity() {
             launch {
                 val images = getImages()
                 withContext(UI) {
-                    imageGrid.adapter = GalleryAdapter(images)
+                    imageGrid.adapter = GalleryAdapter(images, Glide.with(this@GalleryActivity))
                     imageGrid.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
                 }
             }

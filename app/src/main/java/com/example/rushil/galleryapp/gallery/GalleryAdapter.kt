@@ -9,13 +9,14 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestManager
+import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.CustomViewTarget
 import com.bumptech.glide.request.transition.Transition
 import com.example.rushil.galleryapp.R
 import kotlin.math.roundToInt
 
-class GalleryAdapter(images: List<Image>) : ListAdapter<Image, GalleryViewHolder>(diffCallback) {
+class GalleryAdapter(images: List<Image>, private val glide: RequestManager) : ListAdapter<Image, GalleryViewHolder>(diffCallback) {
     init {
         submitList(images)
     }
@@ -35,10 +36,12 @@ class GalleryAdapter(images: List<Image>) : ListAdapter<Image, GalleryViewHolder
         else holder.title.visibility = View.VISIBLE
         Log.d("GalleryAdapter", title)
 
-        Glide
-            .with(holder.image)
+        val loadingOptions = RequestOptions()
+            .override(300, 300)
+        glide
             .asBitmap()
             .load("https://farm${image.farm}.staticflickr.com/${image.server}/${image.id}_${image.secret}.jpg")
+            .apply(loadingOptions)
             .into(object : CustomViewTarget<ImageView, Bitmap>(holder.image) {
                 override fun onLoadFailed(errorDrawable: Drawable?) {
                     holder.image.setImageDrawable(errorDrawable)
