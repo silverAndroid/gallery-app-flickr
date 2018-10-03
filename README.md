@@ -2,6 +2,8 @@
 
 Simple gallery app powered by the Flickr API
 
+<img src="./gallery.png" height="500px" alt="Screenshot" />
+
 ## Building and running the app
 
 In order to prevent my API key from being committed, I created a secret.properties file which contained it.
